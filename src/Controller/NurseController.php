@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class NurseController extends AbstractController
 {
 
-    public static $data = [
+    public  $data = [
         ["nombre" => "Xavier",
         "pwd" => "1234"],
         ["nombre" => "Hugo",
@@ -19,4 +19,11 @@ class NurseController extends AbstractController
         ["nombre" => "Fernanfloo",
         "pwd" => "9876"]
     ];
+
+    #[Route('/nurses', name: 'nursesInfo')]
+    public function findall(): JsonResponse
+    {
+         //return $this->json($this->data); <- Esta linea devuelve exactamete LO MISMO que la linea de abajo
+         return new JsonResponse($this->data);
+    }
 }
