@@ -66,7 +66,7 @@ class NurseController extends AbstractController
     {
         $nurseFind = [];
         $name = $request->get('name') ?? null;
-        if (is_null($name)) {
+        if (!is_null($name)) {
             foreach ($this->data as $key => $value) {
                 if ($value["nombre"] == (string)$name) {
                     array_push($nurseFind, [
