@@ -25,5 +25,6 @@ class NurseController extends AbstractController
     {
          //return $this->json($this->data); <- Esta linea devuelve exactamete LO MISMO que la linea de abajo
          return new JsonResponse($this->data);
+         
     }
 }
