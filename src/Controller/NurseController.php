@@ -19,4 +19,12 @@ class NurseController extends AbstractController
         ["nombre" => "Fernanfloo",
         "pwd" => "9876"]
     ];
+
+    #[Route('/nurses', name: 'app_nurse')]
+    public function findall(): JsonResponse
+    {
+        return new JsonResponse(self::$data);
+        //return $this->json($this->data);
+    }
+
 }
