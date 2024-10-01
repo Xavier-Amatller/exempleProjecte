@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 class NurseController extends AbstractController
 {
@@ -15,27 +14,27 @@ class NurseController extends AbstractController
     public $data = [
         [
             "nombre" => "Xavier",
-            "apellido"=>"Amatller",
+            "apellido" => "Amatller",
             "pwd" => "1234"
         ],
         [
             "nombre" => "Hugo",
-            "apellido"=>"Gonzalez",
+            "apellido" => "Gonzalez",
             "pwd" => "5555"
         ],
         [
             "nombre" => "Glen",
-            "apellido"=>"Marti",
+            "apellido" => "Marti",
             "pwd" => "0000"
         ],
         [
             "nombre" => "Fernanfloo",
-            "apellido"=>"Futbolista",
+            "apellido" => "Futbolista",
             "pwd" => "9876"
         ],
         [
             "nombre" => "Glen",
-            "apellido"=>"Oliveres",
+            "apellido" => "Oliveres",
             "pwd" => "2323"
         ],
     ];
@@ -47,19 +46,23 @@ class NurseController extends AbstractController
         return new JsonResponse(self::$data);
         //return $this->json($this->data);
     }
-  
+
     #[Route('/nurse_login', name: 'app_home', methods: ['GET'])]
     public function login(Request $request): JsonResponse
     {
-      return new JsonResponse(in_array(
-        ["nombre"=> $request->get("nombre"),
-        "pwd"=>$request->get("pwd")],
-        self::$data)
-      );
+        return new JsonResponse(
+            in_array(
+                [
+                    "nombre" => $request->get("nombre"),
+                    "pwd" => $request->get("pwd")
+                ],
+                self::$data
+            )
+        );
     }
-}
+
     #[Route('/searchByName', name: 'app_home', methods: ['POST'])]
-    public function index(Request $request,): JsonResponse
+    function index(Request $request,): JsonResponse
     {
         $nurseFind = [];
         $name = $request->get('name') ?? null;
