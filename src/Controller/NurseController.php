@@ -62,7 +62,7 @@ class NurseController extends AbstractController
     }
 
     #[Route('/searchByName', name: 'app_home', methods: ['POST'])]
-    function index(Request $request,): JsonResponse
+    function index(Request $request): JsonResponse
     {
         $nurseFind = [];
         $name = $request->get('name') ?? null;
