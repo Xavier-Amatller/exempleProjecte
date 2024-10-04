@@ -40,7 +40,7 @@ class NurseController extends AbstractController
     ];
 
 
-    #[Route('/nurses', name: 'app_nurse')]
+    #[Route('/nurses', name: 'app_nurse', methods: ['GET'])]
     public function findall(): JsonResponse
     {
         return new JsonResponse(self::$data);
