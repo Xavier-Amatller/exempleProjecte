@@ -76,6 +76,10 @@ class NurseController extends AbstractController
                 }
             }
         }
+        echo "test";
         return $this->json($nurseFind);
+        
     }
 }
+
+
