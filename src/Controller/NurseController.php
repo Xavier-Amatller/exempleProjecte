@@ -47,7 +47,7 @@ class NurseController extends AbstractController
         //return $this->json($this->data);
     }
 
-    #[Route('/nurse_login', name: 'app_home', methods: ['GET'])]
+    #[Route('/nurse_login', name: 'app_home', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
         return new JsonResponse(
