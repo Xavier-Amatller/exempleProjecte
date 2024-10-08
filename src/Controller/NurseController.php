@@ -41,7 +41,7 @@ class NurseController extends AbstractController
 
 
     #[Route('/nurses', name: 'app_nurse', methods: ['GET'])]
-    public function findall(): JsonResponse
+    public function findAll(): JsonResponse
     {
         return new JsonResponse(self::$data);
         //return $this->json($this->data);
