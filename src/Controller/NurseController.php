@@ -47,17 +47,20 @@ class NurseController extends AbstractController
         //return $this->json($this->data);
     }
 
-    #[Route('/nurse_login', name: 'app_home', methods: ['POST'])]
+    #[Route('/nurse_login', name: 'app_nurse_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
+      $login_success = in_array(
+        [
+            "nombre" => $request->get("nombre"),
+            "apellido" => $request->get("apellido"),
+            "pwd" => $request->get("pwd")
+        ],
+        $this->data
+      );
+        // Returns HTTP code status 200 if login is correct, 401 otherwise.
         return new JsonResponse(
-            in_array(
-                [
-                    "nombre" => $request->get("nombre"),
-                    "pwd" => $request->get("pwd")
-                ],
-                self::$data
-            )
+            $login_success, $login_success?JsonResponse::HTTP_OK : JsonResponse::HTTP_UNAUTHORIZED
         );
     }
 
