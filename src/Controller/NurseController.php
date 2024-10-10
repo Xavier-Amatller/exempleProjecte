@@ -81,6 +81,9 @@ class NurseController extends AbstractController
                 }
             }
         }
-        return $this->json($nurseFind,200);
-    }
+        if (!empty($nurseFind)) {
+            return new JsonResponse($nurseFind, 200);
+        }
+    
+        return new JsonResponse($nurseFind, 404);    }
 }
