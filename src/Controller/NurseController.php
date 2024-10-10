@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
+
+#[Route('/nurse')]
 class NurseController extends AbstractController
 {
 
@@ -40,14 +42,14 @@ class NurseController extends AbstractController
     ];
 
 
-    #[Route('/nurses', name: 'app_nurse', methods: ['GET'])]
+    #[Route('/list', name: 'app_nurse', methods: ['GET'])]
     public function findAll(): JsonResponse
     {
-        return new JsonResponse(self::$data);
+        return new JsonResponse(self::$data, 200);
         //return $this->json($this->data);
     }
 
-    #[Route('/nurse_login', name: 'app_nurse_login', methods: ['POST'])]
+    #[Route('/login', name: 'app_nurse_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
       $login_success = in_array(
@@ -79,6 +81,6 @@ class NurseController extends AbstractController
                 }
             }
         }
-        return $this->json($nurseFind);
+        return $this->json($nurseFind, 200);
     }
 }
