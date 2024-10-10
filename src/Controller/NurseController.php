@@ -45,28 +45,29 @@ class NurseController extends AbstractController
     #[Route('/list', name: 'app_nurse', methods: ['GET'])]
     public function findAll(): JsonResponse
     {
-        return new JsonResponse(self::$data,200);
+        return new JsonResponse(self::$data, 200);
         //return $this->json($this->data);
     }
 
     #[Route('/login', name: 'app_nurse_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
-      $login_success = in_array(
-        [
-            "nombre" => $request->get("nombre"),
-            "apellido" => $request->get("apellido"),
-            "pwd" => $request->get("pwd")
-        ],
-        $this->data
-      );
+        $login_success = in_array(
+            [
+                "nombre" => $request->get("nombre"),
+                "apellido" => $request->get("apellido"),
+                "pwd" => $request->get("pwd")
+            ],
+            $this->data
+        );
         // Returns HTTP code status 200 if login is correct, 401 otherwise.
         return new JsonResponse(
-            $login_success, $login_success?JsonResponse::HTTP_OK : JsonResponse::HTTP_UNAUTHORIZED
+            $login_success,
+            $login_success ? JsonResponse::HTTP_OK : JsonResponse::HTTP_UNAUTHORIZED
         );
     }
 
-    #[Route('/searchByName', name: 'app_home', methods: ['GET'])]
+    #[Route('/searchByName', name: 'app_searchByName', methods: ['GET'])]
     public function searchNursesByName(Request $request): JsonResponse
     {
         $nurseFind = [];
@@ -84,6 +85,7 @@ class NurseController extends AbstractController
         if (!empty($nurseFind)) {
             return new JsonResponse($nurseFind, 200);
         }
-    
-        return new JsonResponse($nurseFind, 404);    }
+
+        return new JsonResponse($nurseFind, 404);
+    }
 }
