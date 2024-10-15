@@ -1,4 +1,4 @@
-###### Main Authors / Contributors: **Xavier Amatller** (@Xavier-Amatller) , **Hugo González** (@perita23) , **Martí Diciano** (@HodeonArtz)
+> Main Authors / Contributors: **Xavier Amatller** (@Xavier-Amatller) , **Hugo González** (@perita23) & **Martí Diciano** (@HodeonArtz)
 # Initial Project (*Projecte Inicial*)
 
 ## About this project
