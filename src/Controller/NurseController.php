@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-
+use App\Entity\Nurse;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/nurse')]
 class NurseController extends AbstractController
@@ -67,25 +68,30 @@ class NurseController extends AbstractController
         );
     }
 
-    #[Route('/searchByName', name: 'app_searchByName', methods: ['GET'])]
-    public function searchNursesByName(Request $request): JsonResponse
+    #[Route('/search_by_name', name: 'app_search_by_name', methods: ['GET'])]
+    public function searchNursesByName(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        $nurseFind = [];
         $name = $request->get('name') ?? null;
+        $nursesFound = [];
+        
         if (!is_null($name)) {
-            foreach ($this->data as $key => $value) {
-                if ($value["nombre"] == (string)$name) {
-                    array_push($nurseFind, [
-                        'Nombre' => $value['nombre'],
-                        'Apellido' => $value['apellido'],
-                    ]);
-                }
-            }
-        }
-        if (!empty($nurseFind)) {
-            return new JsonResponse($nurseFind, 200);
-        }
+          $nursesFound = $entityManager->getRepository(className: Nurse::class)->
+            findBy([
+              "name" => $name
+            ]);
 
-        return new JsonResponse($nurseFind, 404);
+          $nursesFound = array_map(
+            callback: 
+              fn($nurse): mixed=> [
+                "name"=> $nurse->getName(),
+                "surname" => $nurse->getSurname()
+              ], 
+            array: $nursesFound
+          );
+        }
+        if (!empty($nursesFound)) 
+            return new JsonResponse($nursesFound, 200);
+        
+        return new JsonResponse($nursesFound, 404);
     }
 }
