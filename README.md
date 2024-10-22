@@ -11,7 +11,6 @@ This project is executed with the goals of learning and understanding about web 
 3. Composer
 4. Symfony
 5. MySQL
-6. Hibernate
 
 ## Work with this project
 ### Clone repository
