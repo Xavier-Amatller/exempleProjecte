@@ -70,11 +70,11 @@ class NurseController extends AbstractController
                 ]);
 
             $nursesFound = array_map(
-                callback: fn($nurse): mixed => [
+                 fn($nurse) => [
                     "name" => $nurse->getName(),
                     "surname" => $nurse->getSurname()
                 ],
-                array: $nursesFound
+                 $nursesFound
             );
         }
         if (!empty($nursesFound))
