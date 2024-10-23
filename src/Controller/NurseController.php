@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\Validator\Constraints\Json;
 
 #[Route('/nurse')]
 class NurseController extends AbstractController
@@ -69,7 +69,7 @@ class NurseController extends AbstractController
                 $nurse->getPasswd(),
             );
         }
-        return new JsonResponse($data);
+        return new JsonResponse($data,JsonResponse::HTTP_OK);
     }
 
     #[Route('/login', name: 'app_nurse_login', methods: ['POST'])]
