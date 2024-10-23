@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Nurse;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints\Json;
 
 #[Route('/nurse')]
@@ -72,17 +74,41 @@ class NurseController extends AbstractController
         return new JsonResponse($data,JsonResponse::HTTP_OK);
     }
 
+    // #[Route('/login', name: 'app_nurse_login', methods: ['POST'])]
+    // public function login(Request $request): JsonResponse
+    // {
+    //     $login_success = in_array(
+    //         [
+    //             "nombre" => $request->get("nombre"),
+    //             "apellido" => $request->get("apellido"),
+    //             "pwd" => $request->get("pwd")
+    //         ],
+    //         $this->data
+    //     );
+    //     // Returns HTTP code status 200 if login is correct, 401 otherwise.
+    //     return new JsonResponse(
+    //         $login_success,
+    //         $login_success ? JsonResponse::HTTP_OK : JsonResponse::HTTP_UNAUTHORIZED
+    //     );
+    // }
+
     #[Route('/login', name: 'app_nurse_login', methods: ['POST'])]
-    public function login(Request $request): JsonResponse
+    public function login(Request $request, EntityManagerInterface $entityManagerInterface): JsonResponse
     {
-        $login_success = in_array(
-            [
-                "nombre" => $request->get("nombre"),
-                "apellido" => $request->get("apellido"),
-                "pwd" => $request->get("pwd")
-            ],
-            $this->data
+
+        $findBy  = [
+            "email" => $request->get("email"),
+            "passwd" => $request->get("passwd")
+        ];
+
+        $nurse = $entityManagerInterface->getRepository(Nurse::class)->findOneBy(
+            $findBy
         );
+
+        $login_success = isset($nurse)
+            ? true
+            : false;
+
         // Returns HTTP code status 200 if login is correct, 401 otherwise.
         return new JsonResponse(
             $login_success,
