@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Nurse;
+use App\Repository\NurseRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Nurse;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\Validator\Constraints\Json;
 
 #[Route('/nurse')]
 class NurseController extends AbstractController
@@ -43,12 +47,31 @@ class NurseController extends AbstractController
         ],
     ];
 
-
+    /* 
     #[Route('/list', name: 'app_nurse', methods: ['GET'])]
     public function findAll(): JsonResponse
     {
         return new JsonResponse($this->data, 200);
         //return $this->json($this->data);
+    }
+    */
+    
+    #[Route('/list', name: 'app_nurse', methods: ['GET'])]
+    public function list(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $nurses = $entityManager->getRepository(Nurse::class)->findAll();
+        $data = [];
+        foreach ($nurses as $nurse) {
+            array_push(
+                $data,
+                $nurse->getId(),
+                $nurse->getName(),
+                $nurse->getSurname(),
+                $nurse->getEmail(),
+                $nurse->getPasswd(),
+            );
+        }
+        return new JsonResponse($data,JsonResponse::HTTP_OK);
     }
 
     // #[Route('/login', name: 'app_nurse_login', methods: ['POST'])]
